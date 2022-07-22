@@ -7,7 +7,7 @@ import linux_metrics as lm
 
 import psutil
 
-print((psutil.net_io_counters(pernic=True)['lo'][0]))
+# print((psutil.net_io_counters(pernic=True)['lo'][0]))
 
 # def main():
 
