@@ -14,4 +14,5 @@ async def upload_log_file():
 async def get_log_file():
     return JSONResponse({"message": "Get log file"})
 
-# @log_metrics_router.get("/log_metrics/parse_log_file")
+@log_metrics_router.get("/log_metrics/parse_android_log_file")
+async def parse_android_log_file():
