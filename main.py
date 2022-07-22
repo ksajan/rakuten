@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.routes.system_metrics import system_metrics_router
+from api.routes.response_time import response_time_router
+from api.routes.log_metrics import log_metrics_router
 
 app = FastAPI(debug=True)
 
@@ -20,6 +22,8 @@ def root():
     return {"message": "Hello World"}
 
 app.include_router(system_metrics_router)
+app.include_router(response_time_router)
+app.include_router(log_metrics_router)
 
 # if __name__ == "__main__":
 #     uvicorn.run("main:app", host='0.0.0.0', port=8000, reload=True, debug=True)
