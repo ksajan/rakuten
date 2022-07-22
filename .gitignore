@@ -161,3 +161,4 @@ cython_debug/
 
 /home/bruce/Documents/personal/hackathon/rakuten/test.py
 test.py
+__pycache__/main.cpython-38.pyc
