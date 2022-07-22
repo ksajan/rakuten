@@ -1,3 +1,5 @@
+import pandas as pd
+
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.params import Form, Body
@@ -16,4 +18,10 @@ async def get_log_file():
 
 @log_metrics_router.get("/log_metrics/parse_android_log_file")
 async def parse_android_log_file():
-    pass
+    df = pd.read_csv("api/data/Andriod/Andriod_2k.log_structured.csv")
+    return JSONResponse({"dataframe": df})
+
+@log_metrics_router.get("/log_metrics/parse_apache_log_file")
+async def parse_apache_log_file():
+    df = pd.read_csv("api/data/Apache/apache_2k.log_structured.csv")
+    return JSONResponse({"dataframe": df})
