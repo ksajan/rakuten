@@ -1,5 +1,6 @@
 from linux_metrics import cpu_stat, disk_stat, mem_stat, net_stat
 import psutil
+import shutil
 from sys import prefix
 
 
@@ -54,8 +55,8 @@ async def get_disk_reads_writes():
 
 @system_metrics_router.get("/system_metrics/disk_stat/disk_usage")
 async def get_disk_usage():
-    device, size, used, free, percent, mountpoint = disk_stat.disk_usage('/')
-    return JSONResponse({"device": device, "size": size, "used": used, "free": free, "percent": percent, "mountpoint": mountpoint})
+    total, used, free = shutil.disk_usage('/')
+    return JSONResponse({"total": bytesto(total, 'g'), "used": bytesto(used, 'g'), "free": bytesto(free, 'g')})
 
 @system_metrics_router.get("/system_metrics/disk_stat/disk_reads_writes_per_second")
 async def get_disk_reads_writes_per_second():
@@ -70,7 +71,7 @@ async def get_memory_usage():
 
 @system_metrics_router.get("/system_metrics/net_stat/network_bandwidth_usage")
 async def get_network_bandwidth_usage():
-    response = psutil.net_io_counters(pernic=True)['lo']
-    bytes_sent, bytes_recv = bytesto(response[0], 'm'), bytesto(response[1], 'm')
+    bytes_sent, bytes_recv = bytesto(psutil.net_io_counters().bytes_sent, 'm'), bytesto(psutil.net_io_counters().bytes_recv, 'm')
+    # bytes_sent, bytes_recv = bytesto(response[0], 'm'), bytesto(response[1], 'm')
     return JSONResponse({"bytes_sent": bytes_sent, "bytes_recv": bytes_recv})
     

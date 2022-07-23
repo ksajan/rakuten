@@ -18,10 +18,10 @@ log_metrics_router = APIRouter(prefix="/api/v1", tags=["log_metrics"])
 
 @log_metrics_router.get("/log_metrics/parse_android_log_file")
 async def parse_android_log_file():
-    df = pd.read_csv("api/data/Andriod/Andriod_2k.log_structured.csv")
-    return JSONResponse({"dataframe": df})
+    df = pd.read_csv("api/data/Andriod/Andriod_2k.log_structured.csv").to_json()
+    return df
 
 @log_metrics_router.get("/log_metrics/parse_apache_log_file")
 async def parse_apache_log_file():
-    df = pd.read_csv("api/data/Apache/apache_2k.log_structured.csv")
-    return JSONResponse({"dataframe": df})
+    df = pd.read_csv("api/data/Apache/apache_2k.log_structured.csv").to_json()
+    return df
