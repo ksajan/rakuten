@@ -39,26 +39,45 @@ import psutil
 #     main()
 
 
-import pandas as pd
-import numpy as np
-# technologies= {
-#     'Courses':["Spark","PySpark","Hadoop","Python","Pandas"],
-#     'Fee' :[22000,25000,23000,24000,26000],
-#     'Duration':['30days','50days','30days', None,np.nan],
-#     'Discount':[1000,2300,1000,1200,2500]
-#           }
-# df = pd.DataFrame(technologies)
-# print(df)
+# import pandas as pd
+# import numpy as np
+# # technologies= {
+# #     'Courses':["Spark","PySpark","Hadoop","Python","Pandas"],
+# #     'Fee' :[22000,25000,23000,24000,26000],
+# #     'Duration':['30days','50days','30days', None,np.nan],
+# #     'Discount':[1000,2300,1000,1200,2500]
+# #           }
+# # df = pd.DataFrame(technologies)
+# # print(df)
 
-# # Query Rows using DataFrame.query()
-# df2=df.query("Courses == 'Spark'")
-# print(df2)
-# #Using variable
-# value='Spark'
-# df2=df.query("Courses == @value")
-# print(df2)
-# import requests
-# response = requests.request("GET", 'https://system-alert-and-monitoring.herokuapp.com/api/v1/system_metrics/cpu_stat/cpu_avg_load')
-# print(response.elapsed.total_seconds())
-df = pd.read_csv("https://rakhuten.s3.ap-south-1.amazonaws.com/data/data/csv_data/Apache/Apache_2k.log_structured.csv")
-print(df.head())
+# # # Query Rows using DataFrame.query()
+# # df2=df.query("Courses == 'Spark'")
+# # print(df2)
+# # #Using variable
+# # value='Spark'
+# # df2=df.query("Courses == @value")
+# # print(df2)
+# # import requests
+# # response = requests.request("GET", 'https://system-alert-and-monitoring.herokuapp.com/api/v1/system_metrics/cpu_stat/cpu_avg_load')
+# # print(response.elapsed.total_seconds())
+# df = pd.read_csv("https://rakhuten.s3.ap-south-1.amazonaws.com/data/data/csv_data/Apache/Apache_2k.log_structured.csv")
+# print(df.head())
+
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
+message = Mail(
+    from_email='aravind.bhaskar@oureye.ai',
+    to_emails='yuvaraj@oureye.ai',
+    subject='Sending with Twilio SendGrid is Fun',
+    html_content='<strong>and easy to do anywhere, even with Python</strong>')
+try:
+    print(type(os.environ.get('SENDGRID_API_KEY')))
+    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+    response = sg.send(message)
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+except Exception as e:
+    print(e.message)
